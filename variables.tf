@@ -35,36 +35,39 @@ variable "enable" {
 }
 
 variable "resource_group_name" {
-  description = "A container that holds related resources for an Azure solution"
+  type        = string
   default     = ""
+  description = "A container that holds related resources for an Azure solution"
 }
 
 variable "location" {
-  description = "The location/region to keep all your network resources. To get the list of all locations with table format from azure cli, run 'az account list-locations -o table'"
+  type        = string
   default     = ""
+  description = "The location/region to keep all your network resources. To get the list of all locations with table format from azure cli, run 'az account list-locations -o table'"
+
 }
 
 variable "container_registry_config" {
-  description = "Manages an Azure Container Registry"
   type = object({
     name                      = string
     sku                       = optional(string)
     quarantine_policy_enabled = optional(bool)
     zone_redundancy_enabled   = optional(bool)
   })
+  description = "Manages an Azure Container Registry"
+
 }
 
 variable "georeplications" {
-  description = "A list of Azure locations where the container registry should be geo-replicated"
   type = list(object({
     location                = string
     zone_redundancy_enabled = optional(bool)
   }))
-  default = []
+  default     = []
+  description = "A list of Azure locations where the container registry should be geo-replicated"
 }
 
 variable "network_rule_set" { # change this to match actual objects
-  description = "Manage network rules for Azure Container Registries"
   type = object({
     default_action = optional(string)
     ip_rule = optional(list(object({
@@ -74,11 +77,11 @@ variable "network_rule_set" { # change this to match actual objects
       subnet_id = string
     })))
   })
-  default = null
+  default     = null
+  description = "Manage network rules for Azure Container Registries"
 }
 
 variable "retention_policy" {
-  description = "Set a retention policy for untagged manifests"
   type = object({
     days    = optional(number)
     enabled = optional(bool)
@@ -87,37 +90,39 @@ variable "retention_policy" {
     days    = 10
     enabled = true
   }
+  description = "Set a retention policy for untagged manifests"
 }
 
 variable "enable_content_trust" {
-  description = "Boolean value to enable or disable Content trust in Azure Container Registry"
+  type        = bool
   default     = true
+  description = "Boolean value to enable or disable Content trust in Azure Container Registry"
 }
 
 variable "identity_ids" {
-  description = "Specifies a list of user managed identity ids to be assigned. This is required when `type` is set to `UserAssigned` or `SystemAssigned, UserAssigned`"
+  type        = any
   default     = null
+  description = "Specifies a list of user managed identity ids to be assigned. This is required when `type` is set to `UserAssigned` or `SystemAssigned, UserAssigned`"
 }
 
 variable "encryption" {
-  description = "Encrypt registry using a customer-managed key"
   type = object({
     key_vault_key_id   = string
     identity_client_id = string
   })
-  default = null
+  default     = null
+  description = "Encrypt registry using a customer-managed key"
 }
 
 variable "scope_map" {
-  description = "Manages an Azure Container Registry scope map. Scope Maps are a preview feature only available in Premium SKU Container registries."
   type = map(object({
     actions = list(string)
   }))
-  default = null
+  default     = null
+  description = "Manages an Azure Container Registry scope map. Scope Maps are a preview feature only available in Premium SKU Container registries."
 }
 
 variable "container_registry_webhooks" {
-  description = "Manages an Azure Container Registry Webhook"
   type = map(object({
     service_uri    = string
     actions        = list(string)
@@ -125,17 +130,22 @@ variable "container_registry_webhooks" {
     scope          = string
     custom_headers = map(string)
   }))
-  default = null
+  default     = null
+  description = "Manages an Azure Container Registry Webhook"
 }
 
 variable "enable_private_endpoint" {
-  description = "Manages a Private Endpoint to Azure Container Registry"
+  type        = bool
   default     = true
+  description = "Manages a Private Endpoint to Azure Container Registry"
+
 }
 
 variable "existing_private_dns_zone" {
-  description = "Name of the existing private DNS zone"
+  type        = string
   default     = null
+  description = "Name of the existing private DNS zone"
+
 }
 
 variable "private_dns_name" {
@@ -185,7 +195,7 @@ variable "alias_sub" {
   description = "Subscription id for different sub in which dns zone is present."
 }
 
-##----------------------------------------------------------------------------- 
+##-----------------------------------------------------------------------------
 ## To be set when existing dns zone is in diffrent subscription.
 ##-----------------------------------------------------------------------------
 variable "diff_sub" {
@@ -206,12 +216,6 @@ variable "addon_vent_link" {
   description = "The name of the addon vnet "
 }
 
-variable "addon_resource_group_name" {
-  type        = string
-  default     = ""
-  description = "The name of the addon vnet resource group"
-}
-
 variable "addon_virtual_network_id" {
   type        = string
   default     = ""
@@ -225,7 +229,7 @@ variable "same_vnet" {
 }
 
 variable "existing_private_dns_zone_id" {
-  type        = list(any)
+  type        = string
   default     = null
   description = "ID of existing private dns zone. To be used in dns configuration group in private endpoint."
 }
