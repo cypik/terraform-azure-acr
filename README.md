@@ -53,10 +53,10 @@ This Terraform module creates an Azure Container Registry(ACR) along with additi
          name = "acrrr22" # Name of Container Registry
          sku  = "Premium"
            }
-   
+
       virtual_network_id = module.vnet.id
       subnet_id          = [module.subnet.default_subnet_id]
-   
+
       existing_private_dns_zone                     = data.azurerm_private_dns_zone.existing.name # Name of private dns zone remain same for acr.
       existing_private_dns_zone_id                  = data.azurerm_private_dns_zone.existing.id
       existing_private_dns_zone_resource_group_name = data.azurerm_resource_group.existing.name
@@ -68,7 +68,7 @@ This Terraform module creates an Azure Container Registry(ACR) along with additi
 ```hcl
     module "acr" {
       source              = "git::https://github.com/cypik/terraform-azure-acr.git?ref=v1.0.0"
-      name                = local.name 
+      name                = local.name
       environment         = local.environment
       resource_group_name = module.resource_group.resource_group_name
       location            = module.resource_group.resource_group_location
@@ -76,11 +76,11 @@ This Terraform module creates an Azure Container Registry(ACR) along with additi
          name = "diffacr1234" # Name of Container Registry
          sku  = "Premium"
       }
-   
+
       virtual_network_id = module.vnet.id
       subnet_id          = [module.subnet.default_subnet_id]
-   
-   
+
+
       diff_sub                                      = true
       alias_sub                                     = "082xxxxxxxxxxxxabc60c"  # Subcription id in which dns zone is present.
       existing_private_dns_zone                     = "privatelink.azurecr.io" # Name of private dns zone remain same for acr.
@@ -88,7 +88,7 @@ This Terraform module creates an Azure Container Registry(ACR) along with additi
       existing_private_dns_zone_resource_group_name = "app-test-resource-group"
       }
    ```
-    
+
 
 2. Run `terraform init` and `terraform apply` to create the Azure Resource Group.
 
