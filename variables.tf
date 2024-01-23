@@ -12,19 +12,19 @@ variable "environment" {
 
 variable "repository" {
   type        = string
-  default     = ""
+  default     = "https://github.com/cypik/terraform-azure-acr"
   description = "Terraform current module repo"
 }
 
 variable "label_order" {
   type        = list(any)
-  default     = []
-  description = "Label order, e.g. sequence of application name and environment `name`,`environment`,'attribute' [`webserver`,`qa`,`devops`,`public`,] ."
+  default     = ["name", "environment"]
+  description = "Label order, e.g. `name`,`application`."
 }
 
 variable "managedby" {
   type        = string
-  default     = ""
+  default     = "Cypik"
   description = "ManagedBy, eg ''."
 }
 
