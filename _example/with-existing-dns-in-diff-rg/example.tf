@@ -12,7 +12,8 @@ locals {
 ## Resource group in which all resources will be deployed.
 ##-----------------------------------------------------------------------------
 module "resource_group" {
-  source      = "git::https://github.com/cypik/terraform-azure-resource-group.git?ref=v1.0.0"
+  source      = "cypik/resource-group/azure"
+  version     = "1.0.1"
   name        = local.name
   environment = local.environment
   location    = "North Europe"
@@ -23,7 +24,8 @@ module "resource_group" {
 ## Virtual Network for which subnet will be created for private endpoint and vnet link will be created in private dns zone.
 ##-----------------------------------------------------------------------------
 module "vnet" {
-  source              = "git::https://github.com/cypik/terraform-azure-vnet.git?ref=v1.0.0"
+  source              = "cypik/vnet/azure"
+  version             = "1.0.1"
   name                = local.name
   environment         = local.environment
   resource_group_name = module.resource_group.resource_group_name
@@ -32,7 +34,8 @@ module "vnet" {
 }
 
 module "subnet" {
-  source               = "git::https://github.com/cypik/terraform-azure-subnet.git?ref=v1.0.0"
+  source               = "cypik/subnet/azure"
+  version              = "1.0.1"
   name                 = local.name
   environment          = local.environment
   resource_group_name  = module.resource_group.resource_group_name

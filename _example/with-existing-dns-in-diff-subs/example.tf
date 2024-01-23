@@ -8,7 +8,8 @@ locals {
 }
 
 module "resource_group" {
-  source      = "git::https://github.com/cypik/terraform-azure-resource-group.git?ref=v1.0.0"
+  source      = "cypik/resource-group/azure"
+  version     = "1.0.1"
   name        = local.name
   environment = local.environment
   location    = "North Europe"
@@ -16,7 +17,8 @@ module "resource_group" {
 
 
 module "vnet" {
-  source              = "git::https://github.com/cypik/terraform-azure-vnet.git?ref=v1.0.0"
+  source              = "cypik/vnet/azure"
+  version             = "1.0.1"
   name                = local.name
   environment         = local.environment
   resource_group_name = module.resource_group.resource_group_name
@@ -26,8 +28,8 @@ module "vnet" {
 
 
 module "subnet" {
-  source = "git::https://github.com/cypik/terraform-azure-subnet.git?ref=v1.0.0"
-
+  source               = "cypik/subnet/azure"
+  version              = "1.0.1"
   name                 = local.name
   environment          = local.environment
   resource_group_name  = module.resource_group.resource_group_name
@@ -59,7 +61,7 @@ module "acr" {
 
 
   diff_sub                                      = true
-  alias_sub                                     = "082xxxxxxxxxxxxabc60c"  # Subcription id in which dns zone is present.
+  alias_sub                                     = "xxxxxxxxxxxxxxxxxxxx"   # Subcription id in which dns zone is present.
   existing_private_dns_zone                     = "privatelink.azurecr.io" # Name of private dns zone remain same for acr.
   existing_private_dns_zone_id                  = "/subscriptions/08xxxxxxxxxxxxxxx9c0c/resourceGroups/app-test-resource-group/providers/Microsoft.Network/privateDnsZones/privatelink.azurecr.io"
   existing_private_dns_zone_resource_group_name = "app-test-resource-group"
