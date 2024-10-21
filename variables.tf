@@ -24,8 +24,8 @@ variable "label_order" {
 
 variable "managedby" {
   type        = string
-  default     = "Cypik"
-  description = "ManagedBy, eg ''."
+  default     = "info@cypik.com"
+  description = "ManagedBy, eg 'info@cypik.com'"
 }
 
 variable "enable" {
@@ -79,24 +79,6 @@ variable "network_rule_set" { # change this to match actual objects
   })
   default     = null
   description = "Manage network rules for Azure Container Registries"
-}
-
-variable "retention_policy" {
-  type = object({
-    days    = optional(number)
-    enabled = optional(bool)
-  })
-  default = {
-    days    = 10
-    enabled = true
-  }
-  description = "Set a retention policy for untagged manifests"
-}
-
-variable "enable_content_trust" {
-  type        = bool
-  default     = true
-  description = "Boolean value to enable or disable Content trust in Azure Container Registry"
 }
 
 variable "identity_ids" {

@@ -24,7 +24,7 @@ for creating AZURE resources, and you can customize the inputs as needed. Below 
 ```hcl
     module "acr" {
       source              = "cypik/acr/azure"
-      version             = "1.0.1"
+      version             = "1.0.2"
       name                = local.name
       environment         = local.environment
       resource_group_name = module.resource_group.resource_group_name
@@ -42,7 +42,7 @@ for creating AZURE resources, and you can customize the inputs as needed. Below 
 ```hcl
     module "acr" {
       source              = "cypik/acr/azure"
-      version             = "1.0.1"
+      version             = "1.0.2"
       name                = local.name
       environment         = local.environment
       resource_group_name = module.resource_group.resource_group_name
@@ -66,7 +66,7 @@ for creating AZURE resources, and you can customize the inputs as needed. Below 
 ```hcl
     module "acr" {
       source              = "cypik/acr/azure"
-      version             = "1.0.1"
+      version             = "1.0.2"
       name                = local.name
       environment         = local.environment
       resource_group_name = module.resource_group.resource_group_name
@@ -112,21 +112,21 @@ Happy Terraforming!
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.6.6 |
-| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | >=3.87.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.9.5 |
+| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | >= 4.2.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | >=3.87.0 |
-| <a name="provider_azurerm.peer"></a> [azurerm.peer](#provider\_azurerm.peer) | >=3.87.0 |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | >= 4.2.0 |
+| <a name="provider_azurerm.peer"></a> [azurerm.peer](#provider\_azurerm.peer) | >= 4.2.0 |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_labels"></a> [labels](#module\_labels) | cypik/labels/azure | 1.0.1 |
+| <a name="module_labels"></a> [labels](#module\_labels) | cypik/labels/azure | 1.0.2 |
 
 ## Resources
 
@@ -155,7 +155,6 @@ Happy Terraforming!
 | <a name="input_container_registry_webhooks"></a> [container\_registry\_webhooks](#input\_container\_registry\_webhooks) | Manages an Azure Container Registry Webhook | <pre>map(object({<br>    service_uri    = string<br>    actions        = list(string)<br>    status         = optional(string)<br>    scope          = string<br>    custom_headers = map(string)<br>  }))</pre> | `null` | no |
 | <a name="input_diff_sub"></a> [diff\_sub](#input\_diff\_sub) | Flag to tell whether dns zone is in different sub or not. | `bool` | `false` | no |
 | <a name="input_enable"></a> [enable](#input\_enable) | Flag to control module creation. | `bool` | `true` | no |
-| <a name="input_enable_content_trust"></a> [enable\_content\_trust](#input\_enable\_content\_trust) | Boolean value to enable or disable Content trust in Azure Container Registry | `bool` | `true` | no |
 | <a name="input_enable_private_endpoint"></a> [enable\_private\_endpoint](#input\_enable\_private\_endpoint) | Manages a Private Endpoint to Azure Container Registry | `bool` | `true` | no |
 | <a name="input_encryption"></a> [encryption](#input\_encryption) | Encrypt registry using a customer-managed key | <pre>object({<br>    key_vault_key_id   = string<br>    identity_client_id = string<br>  })</pre> | `null` | no |
 | <a name="input_environment"></a> [environment](#input\_environment) | Environment (e.g. `prod`, `dev`, `staging`). | `string` | `""` | no |
@@ -166,7 +165,7 @@ Happy Terraforming!
 | <a name="input_identity_ids"></a> [identity\_ids](#input\_identity\_ids) | Specifies a list of user managed identity ids to be assigned. This is required when `type` is set to `UserAssigned` or `SystemAssigned, UserAssigned` | `any` | `null` | no |
 | <a name="input_label_order"></a> [label\_order](#input\_label\_order) | Label order, e.g. `name`,`application`. | `list(any)` | <pre>[<br>  "name",<br>  "environment"<br>]</pre> | no |
 | <a name="input_location"></a> [location](#input\_location) | The location/region to keep all your network resources. To get the list of all locations with table format from azure cli, run 'az account list-locations -o table' | `string` | `""` | no |
-| <a name="input_managedby"></a> [managedby](#input\_managedby) | ManagedBy, eg ''. | `string` | `"Cypik"` | no |
+| <a name="input_managedby"></a> [managedby](#input\_managedby) | ManagedBy, eg 'info@cypik.com' | `string` | `"info@cypik.com"` | no |
 | <a name="input_multi_sub_vnet_link"></a> [multi\_sub\_vnet\_link](#input\_multi\_sub\_vnet\_link) | Flag to control creation of vnet link for dns zone in different subscription | `bool` | `false` | no |
 | <a name="input_name"></a> [name](#input\_name) | Name  (e.g. `app` or `cluster`). | `string` | `""` | no |
 | <a name="input_network_rule_set"></a> [network\_rule\_set](#input\_network\_rule\_set) | Manage network rules for Azure Container Registries | <pre>object({<br>    default_action = optional(string)<br>    ip_rule = optional(list(object({<br>      ip_range = string<br>    })))<br>    virtual_network = optional(list(object({<br>      subnet_id = string<br>    })))<br>  })</pre> | `null` | no |
@@ -175,7 +174,6 @@ Happy Terraforming!
 | <a name="input_public_network_access_enabled"></a> [public\_network\_access\_enabled](#input\_public\_network\_access\_enabled) | To denied public access | `bool` | `false` | no |
 | <a name="input_repository"></a> [repository](#input\_repository) | Terraform current module repo | `string` | `"https://github.com/cypik/terraform-azure-acr"` | no |
 | <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | A container that holds related resources for an Azure solution | `string` | `""` | no |
-| <a name="input_retention_policy"></a> [retention\_policy](#input\_retention\_policy) | Set a retention policy for untagged manifests | <pre>object({<br>    days    = optional(number)<br>    enabled = optional(bool)<br>  })</pre> | <pre>{<br>  "days": 10,<br>  "enabled": true<br>}</pre> | no |
 | <a name="input_same_vnet"></a> [same\_vnet](#input\_same\_vnet) | Variable to be set when multiple acr having common DNS in same vnet. | `bool` | `false` | no |
 | <a name="input_scope_map"></a> [scope\_map](#input\_scope\_map) | Manages an Azure Container Registry scope map. Scope Maps are a preview feature only available in Premium SKU Container registries. | <pre>map(object({<br>    actions = list(string)<br>  }))</pre> | `null` | no |
 | <a name="input_subnet_id"></a> [subnet\_id](#input\_subnet\_id) | Subnet to be used for private endpoint | `list(string)` | `null` | no |
