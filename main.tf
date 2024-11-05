@@ -57,7 +57,6 @@ resource "azurerm_container_registry" "main" {
   dynamic "encryption" {
     for_each = var.encryption != null ? [var.encryption] : []
     content {
-      #   enabled            = true
       key_vault_key_id   = encryption.value.key_vault_key_id
       identity_client_id = encryption.value.identity_client_id
     }
