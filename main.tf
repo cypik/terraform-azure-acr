@@ -1,7 +1,7 @@
 
 module "labels" {
   source      = "cypik/labels/azure"
-  version     = "1.0.1"
+  version     = "1.0.2"
   name        = var.name
   environment = var.environment
   managedby   = var.managedby
@@ -24,9 +24,10 @@ resource "azurerm_container_registry" "main" {
   dynamic "georeplications" {
     for_each = var.georeplications
     content {
-      location                = georeplications.value.location
-      zone_redundancy_enabled = georeplications.value.zone_redundancy_enabled
-      tags                    = merge({ "Name" = format("%s", "georep-${georeplications.value.location}") }, module.labels.tags, )
+      location                  = georeplications.value.location
+      zone_redundancy_enabled   = georeplications.value.zone_redundancy_enabled
+      regional_endpoint_enabled = georeplications.value.regional_endpoint_enabled
+      tags                      = merge({ "Name" = format("%s", "georep-${georeplications.value.location}") }, module.labels.tags, )
     }
   }
 
@@ -44,30 +45,9 @@ resource "azurerm_container_registry" "main" {
         }
       }
 
-      dynamic "virtual_network" {
-        for_each = network_rule_set.value.virtual_network
-        content {
-          action    = "Allow"
-          subnet_id = virtual_network.value.subnet_id
-        }
-      }
     }
   }
 
-  dynamic "retention_policy" {
-    for_each = var.retention_policy != null ? [var.retention_policy] : []
-    content {
-      days    = lookup(retention_policy.value, "days", 7)
-      enabled = lookup(retention_policy.value, "enabled", true)
-    }
-  }
-
-  dynamic "trust_policy" {
-    for_each = var.enable_content_trust ? [1] : []
-    content {
-      enabled = var.enable_content_trust
-    }
-  }
 
   identity {
     type         = var.identity_ids != null ? "SystemAssigned, UserAssigned" : "SystemAssigned"
@@ -77,7 +57,6 @@ resource "azurerm_container_registry" "main" {
   dynamic "encryption" {
     for_each = var.encryption != null ? [var.encryption] : []
     content {
-      enabled            = true
       key_vault_key_id   = encryption.value.key_vault_key_id
       identity_client_id = encryption.value.identity_client_id
     }
